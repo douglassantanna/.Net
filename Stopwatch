@@ -1,0 +1,75 @@
+using System;
+using System.Threading;
+
+namespace stopwatch
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Start(6); // o valor dela pode ser colocado nesse start
+            Menu ();
+        }
+
+        static void Menu() {
+
+            Console.Clear();
+            Console.WriteLine("S = Segundo => 10s = 10 segundos");
+            Console.WriteLine("M = Minuto => 1m = 1 minuto");
+            Console.WriteLine("0 = Sair");
+            Console.WriteLine("Quanto tempo deseja contar?");
+
+            string data = Console.ReadLine().ToLower(); //tolower serve para converter tudo para minúsculo
+            char type = char.Parse(data.Substring(data.Length-1, 1));// o 1 no final serve para pegar o último número-letra.// data.lenght conta os caracteres de 0 a 9. -1 vai servir para subtrair 1 caractere visto q o data.lenght vai contar todos do 0 ao 9. 
+            // substring serve para pegar uma parte dos caracteres digitados. O n1 do final significa q ele vai pegar somente 1 numero/letra.
+            // char.parse serve para converter o valor digitado em caractere. se tiver duvida, assistir aula substring
+            int time = int.Parse(data.Substring(0, data.Length - 1)); //coloca-se o 0 pq queremos pegar desde o num zero. Data.Lenght para pegar todos os numeros, e o -1 para não pegar o ultimo, que seria a letra.
+            int multiplier = 1;
+
+            if (type =='m') {
+                multiplier = 60;
+            }
+
+            if (time == 0) {
+                System.Environment.Exit(0);
+            }
+            PreStart (time * multiplier);
+
+
+            Console.WriteLine(type);
+            Console.WriteLine(time);
+
+        }
+
+        static void PreStart(int time) {
+            Console.Clear();
+            Console.WriteLine("Ready...");
+            Thread.Sleep(1000);
+            Console.WriteLine("Set...");
+            Thread.Sleep(1000);
+            Console.WriteLine("GO!");
+            Thread.Sleep(2500);
+
+            Start(time);
+
+
+        }
+        static void Start(int time) { //coloquei aqui a variavel
+            
+            //int time =10; // tirar a variavel daqui e colocar dentro do start acima
+            int currentTime = 0;
+
+            while (currentTime != time) {
+                Console.Clear(); // serve para limpar a tela
+                currentTime++; // serve para acrescentar um número
+                Console.WriteLine(currentTime); //vai imprimir a contagem do tempo no console
+                Thread.Sleep(1000); // thread.sleep serve para dr uma pausa em milisegundos.. vai esperar esse tempo até ir pra próxima aplicação
+            }
+
+            Console.Clear();
+            Console.WriteLine("Stopwatch finalizado"); // após contar até 6, aparece a mensagem
+            Thread.Sleep(2500); // depois de aparecer a mensagem, o sistema pausa dps de 2,5 seg
+            Menu (); // quando terminar de contar, vai chamar a opção menu de novo
+        }
+    }
+}
